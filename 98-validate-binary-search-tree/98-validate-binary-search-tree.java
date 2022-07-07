@@ -23,17 +23,10 @@ class Solution {
             return true;
         }
         
-        boolean left = isBST(root.left, min, root.val);
-        if(!left){
+        if(root.val <= min || root.val >= max){
             return false;
         }
-        boolean right = isBST(root.right, root.val, max);
         
-        if(left && right && root.val > min && root.val < max){
-            return true;
-        }
-        else{
-            return false;
-        }
+        return isBST(root.left, min, root.val) && isBST(root.right, root.val, max);
     }
 }
