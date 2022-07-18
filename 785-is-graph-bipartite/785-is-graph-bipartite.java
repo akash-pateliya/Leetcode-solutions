@@ -5,7 +5,7 @@ class Solution {
         Arrays.fill(color, -1);
         for(int i=0; i<graph.length; i++){
             if(color[i] == -1){
-                if(!checkBipartite(i, color, graph)){
+                if(!checkBipartite(i, color, graph, 0)){
                     return false;
                 }
             }
@@ -14,24 +14,19 @@ class Solution {
         return true;
     }
     
-    boolean checkBipartite(int vertex, int[] color, int[][] graph){
-        Queue<Integer> queue = new LinkedList<Integer>();
-        queue.add(vertex);
-        color[vertex] = 1;
+    boolean checkBipartite(int vertex, int[] color, int[][] graph, int prevColour){
+        color[vertex] = 1 - prevColour;
         
-        while(!queue.isEmpty()){
-            int top = queue.remove();
-            
-            for(int ver: graph[top]){
+            for(int ver: graph[vertex]){
                 if(color[ver] == -1){
-                    color[ver] = 1 - color[top];
-                    queue.add(ver);
+                    if(!checkBipartite(ver, color, graph, 1 - prevColour)){
+                        return false;
+                    }
                 }
-                else if(color[ver] == color[top]){
+                else if(color[ver] == (1 - prevColour)){
                     return false;
                 }
             }
-        }
         
         return true;
     }
