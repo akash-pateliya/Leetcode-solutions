@@ -12,7 +12,7 @@ class Solution {
                 ans = Math.max(ans, (end - start + 1));
             }
             else{
-                while(map.size() < (end - start + 1)){
+                while(map.size() < (end - start + 1)){ // condition change here
                     ch = str.charAt(start);
                     map.put(ch, map.get(ch) - 1);
                     if(map.get(ch) == 0){
