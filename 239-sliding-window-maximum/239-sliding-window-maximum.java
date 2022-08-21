@@ -11,7 +11,7 @@ class Solution {
             while(!deque.isEmpty() && deque.peekLast() < nums[end]){
                 deque.removeLast();
             }
-            deque.add(nums[end]);
+            deque.addLast(nums[end]);
             
             if((end - start + 1) < k){
                 end++;
