@@ -2,7 +2,7 @@ class Solution {
     public int longestOnes(int[] nums, int k) {
 
         int start =0, end =0;
-        int ans = -1;
+        int ans = 0;
         int count = 0;
         while(end < nums.length){
             if(nums[end] == 0){
@@ -22,14 +22,6 @@ class Solution {
             end++;
         }
         
-        if(ans == -1){
-            if(k == 0){
-                return 0;
-            }
-            else{
-                return nums.length;
-            }
-        }
         return ans;
     }
 }
