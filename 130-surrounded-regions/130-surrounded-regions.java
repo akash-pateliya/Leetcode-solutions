@@ -38,9 +38,7 @@ class Solution {
             }
         }
     }
-    boolean validCheck(int r, int c, char[][] board){
-        return (r != 0 && c != 0 && r != board.length - 1 && c != board[0].length - 1);
-    }
+    
     boolean isValid(int r, int c, char[][] arr){
         if(r >= 0 && c >= 0 && r < arr.length && c < arr[0].length){
             return true;
