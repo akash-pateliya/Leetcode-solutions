@@ -5,15 +5,31 @@ class Solution {
         
         int[][] dp = new int[m][n];
         
-        for(int[] arr: dp){
-            Arrays.fill(arr, -1);
-        }
-        
         if(m == 1 && n == 1){
             return grid[0][0];
         }
         
-        return getMinPathSum(m-1, n-1, grid, dp);
+        for(int row=0; row<m; row++){
+            for(int col=0; col<n; col++){
+                if(row == 0 && col == 0){
+                    dp[row][col] = grid[0][0];
+                }
+                else{
+                    int up = Integer.MAX_VALUE, left = Integer.MAX_VALUE;
+                    
+                    if(row - 1 >= 0){
+                        up = dp[row-1][col];
+                    }
+                    if(col - 1 >= 0){
+                        left = dp[row][col-1];
+                    }
+                    
+                    dp[row][col] = Math.min(up, left) + grid[row][col]; 
+                }
+            }
+        }
+        
+        return dp[m-1][n-1];
     }
     
     int getMinPathSum(int row, int col, int[][] grid, int[][] dp){
