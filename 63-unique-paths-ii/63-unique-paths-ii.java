@@ -11,30 +11,24 @@ class Solution {
         
         int[][] dp = new int[m][n];
         
-        for(int[] arr: dp){
-            Arrays.fill(arr, -1);
+        for(int row=0; row<m; row++){
+            for(int col=0; col<n; col++){
+                if(row == 0 && col == 0){
+                    dp[row][col] = 1;
+                }
+                else{
+                    int down = 0, right =0;
+                    if((row - 1) >= 0 && obstacleGrid[row-1][col] == 0){
+                        down = dp[row-1][col];
+                    }
+                    if((col - 1) >= 0 && obstacleGrid[row][col-1] == 0){
+                        right = dp[row][col-1];
+                    }
+                    dp[row][col] = down+right;
+                }
+            }
         }
-        
-        return countUniquePathsWithObstacles(m-1, n-1, obstacleGrid, dp);
+        return dp[m-1][n-1];
     }
     
-    int countUniquePathsWithObstacles(int row, int col, int[][] obstacleGrid, int[][] dp){
-        if(row == 0 && col == 0){
-            return 1;
-        }
-        if(row < 0 || col < 0 || obstacleGrid[row][col] == 1){
-            return 0;
-        }
-        
-        if(dp[row][col] != -1){
-            return dp[row][col];
-        }
-        
-        int down = countUniquePathsWithObstacles(row - 1, col, obstacleGrid, dp);
-        int right = countUniquePathsWithObstacles(row, col-1, obstacleGrid, dp);
-        
-        dp[row][col] = down+right;
-        
-        return dp[row][col];
-    }
 }
