@@ -1,33 +1,29 @@
 class Solution {
     public int uniquePaths(int m, int n) {
         int[][] dp = new int[m][n];
+        
         for(int i=0; i<m; i++){
             for(int j=0; j<n; j++){
-                dp[i][j] = -1;
+                if(i == 0 && j==0){
+                    dp[i][j] = 1;
+                }
+                else{
+                int left = 0, right = 0;
+                //go down
+                if(isValid(i-1, j, m, n)){
+                    left = dp[i-1][j];
+                }
+                //go right
+                if(isValid(i, j-1, m, n)){
+                    right = dp[i][j-1];
+                } 
+                dp[i][j] = left+right;
+
+                }
             }
         }
-        return countUniquePath(0, 0, m,n, dp);
-    }
-    
-    int countUniquePath(int row, int col, int m, int n, int[][] dp){
-        if(row == m-1 && col == n-1){
-            return 1;
-        }
         
-        if(dp[row][col] != -1){
-            return dp[row][col];
-        }
-        int left = 0, right = 0;
-        //go down
-        if(isValid(row+1, col, m, n)){
-            left = countUniquePath(row+1, col, m, n, dp);
-        }
-        //go right
-        if(isValid(row, col+1, m, n)){
-            right = countUniquePath(row, col+1, m, n, dp);
-        }
-        dp[row][col] = left+right;
-        return dp[row][col];
+        return dp[m-1][n-1];
     }
     
     boolean isValid(int r, int c, int m, int n){
