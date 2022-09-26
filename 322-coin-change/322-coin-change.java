@@ -4,10 +4,24 @@ class Solution {
             return 0;
         }
         int[][] dp = new int[coins.length][amount+1];
-        for(int[] arr: dp){
-            Arrays.fill(arr, -1);
+        
+        for(int i=0; i<=amount; i++){
+            dp[0][i] = i % coins[0] == 0 ? i / coins[0] : 1000000;
         }
-        int ans = getMinCoins(coins.length - 1, amount, coins, dp);
+        
+        for(int i = 1; i<coins.length; i++){
+            for(int j = 0; j<=amount; j++){
+                int exclude = dp[i - 1][j];
+                int include = 1000000;
+                if(j - coins[i] >= 0){
+                    include = 1 + dp[i][j - coins[i]];
+                }
+
+                dp[i][j] = Math.min(include, exclude);
+            }
+        }
+        
+        int ans = dp[coins.length - 1][amount]; //getMinCoins(coins.length - 1, amount, coins, dp);
         if(ans == 1000000){
             return -1;
         }
