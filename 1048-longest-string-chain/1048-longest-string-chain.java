@@ -4,11 +4,18 @@ class Solution {
         
         int[][] dp = new int[words.length+1][words.length+1];
         
-        for(int[] arr: dp){
-            Arrays.fill(arr, -1);
+        for(int i=words.length-1; i >= 0; i--){
+            for(int prev=i-1; prev >= -1; prev--){
+                int len = dp[i+1][prev+1];
+                if(prev == -1 || compareString(words[i], words[prev])){
+                    len = Math.max(len,1 + dp[i+1][i+1]);
+                }
+
+                dp[i][prev+1] = len;
+            }
         }
         
-        return getMaxLen(0, -1, words, dp);
+        return dp[0][0];
     }
     
     int getMaxLen(int i, int prev, String[] words, int[][] dp){
