@@ -3,9 +3,27 @@ class Solution {
         int n = nums.length;
         
         int[] dp = new int[n];
-        Arrays.fill(dp, -1);
         
-        return minJump(0, nums, dp);
+        dp[n-1] = 0;
+        
+        for(int i=n-2; i >= 0; i--){
+            if(nums[i] == 0){
+                dp[i] = 10000;
+                continue;
+            }
+            
+            int maxJump = i + nums[i];
+            int min = Integer.MAX_VALUE;
+            for(int jump = i+1; jump <= maxJump; jump++){
+                if(jump < n){
+                    min = Math.min(min,1 + dp[jump]);
+                }
+            }
+
+            dp[i] = min;
+        }
+        
+        return dp[0];//minJump(0, nums, dp);
     }
     
     int minJump(int i, int[] nums, int[] dp){
