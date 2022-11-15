@@ -63,19 +63,57 @@ class Solution
     //Function to return list containing vertices in Topological order. 
     static int[] topoSort(int V, ArrayList<ArrayList<Integer>> adj) 
     {
-        boolean[] visited = new boolean[V];
-        Stack<Integer> stack = new Stack<>();
+        // dfs approach
+        
+        // boolean[] visited = new boolean[V];
+        // Stack<Integer> stack = new Stack<>();
+        
+        // for(int i=0; i<V; i++){
+        //     if(!visited[i]){
+        //         dfsTopo(i, visited, adj, stack);
+        //     }
+        // }
+        
+        // int[] res = new int[V];
+        // int idx = 0;
+        // while(!stack.empty()){
+        //     res[idx++] = stack.pop();
+        // }
+        
+        // return res;
+        
+        //bfs approach (Kahn's)
+        
+        int[] inDegree = new int[V];
+        Arrays.fill(inDegree, 0);
         
         for(int i=0; i<V; i++){
-            if(!visited[i]){
-                dfsTopo(i, visited, adj, stack);
+            for(int v: adj.get(i)){
+                inDegree[v] = inDegree[v] + 1;
+            }
+        }
+        
+        Queue<Integer> queue = new LinkedList<Integer>();
+        
+        for(int i=0; i<V; i++){
+            if(inDegree[i] == 0){
+                queue.add(i);
             }
         }
         
         int[] res = new int[V];
         int idx = 0;
-        while(!stack.empty()){
-            res[idx++] = stack.pop();
+        while(!queue.isEmpty()){
+            int top = queue.remove();
+            res[idx++] = top;
+            
+            for(int v: adj.get(top)){
+                inDegree[v] = inDegree[v] - 1;
+                
+                if(inDegree[v] == 0){
+                    queue.add(v);
+                }
+            }
         }
         
         return res;
